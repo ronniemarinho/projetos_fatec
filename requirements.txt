@@ -6,3 +6,6 @@ numpy
 plotly
 matplotlib
 vaderSentiment
+networkx
+folium
+webbrowser
