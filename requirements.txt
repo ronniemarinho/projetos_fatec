@@ -9,3 +9,4 @@ vaderSentiment
 networkx
 folium
 webbrowser
+Pillow
