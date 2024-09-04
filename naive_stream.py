@@ -1,11 +1,11 @@
 import streamlit as st
 import pickle
-from sklearn.naive_bayes import MultinomialNB
+from sklearn.naive_bayes import ComplementNB
 # Carregar os dados e o modelo
 with open('risco_credito.pkl', 'rb') as f:
     X_risco_credito, y_risco_credito = pickle.load(f)
 
-naive_risco_credito = MultinomialNB()
+naive_risco_credito = ComplementNB()
 naive_risco_credito.fit(X_risco_credito, y_risco_credito)
 
 
