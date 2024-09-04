@@ -14,3 +14,4 @@ nltk
 scipy
 scikit-fuzzy
 seaborn
+scikit-learn
