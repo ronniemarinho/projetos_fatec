@@ -1,0 +1,6 @@
+opencv-python-headless
+streamlit
+pyqrcode
+requests
+dlib
+numpy
