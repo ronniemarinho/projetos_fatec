@@ -2,5 +2,5 @@ streamlit
 opencv-python-headless
 pyqrcode
 requests
-dlib
 numpy
+dlib==19.22.0
