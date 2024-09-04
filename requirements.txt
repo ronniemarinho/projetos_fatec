@@ -4,3 +4,4 @@ pyqrcode
 requests
 numpy
 plotly
+matplotlib
