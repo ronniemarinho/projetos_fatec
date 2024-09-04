@@ -5,7 +5,7 @@ from sklearn.naive_bayes import MultinomialNB
 with open('risco_credito.pkl', 'rb') as f:
     X_risco_credito, y_risco_credito = pickle.load(f)
 
-naive_risco_credito = GaussianNB()
+naive_risco_credito = MultinomialNB()
 naive_risco_credito.fit(X_risco_credito, y_risco_credito)
 
 
