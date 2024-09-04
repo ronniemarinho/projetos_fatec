@@ -1,4 +1,5 @@
 streamlit
+streamlit-folium
 opencv-python-headless
 pyqrcode
 requests
@@ -8,5 +9,4 @@ matplotlib
 vaderSentiment
 networkx==2.6.3
 folium
-webbrowser
 Pillow
