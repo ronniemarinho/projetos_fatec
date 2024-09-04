@@ -15,3 +15,5 @@ scipy
 scikit-fuzzy
 seaborn
 scikit-learn
+opencv-python
+dlib
