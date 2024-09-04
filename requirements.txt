@@ -10,3 +10,4 @@ vaderSentiment
 networkx==2.6.3
 folium
 Pillow
+nltk
