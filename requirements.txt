@@ -6,7 +6,7 @@ numpy
 plotly
 matplotlib
 vaderSentiment
-networkx
+networkx==2.6.3
 folium
 webbrowser
 Pillow
