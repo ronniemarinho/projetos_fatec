@@ -38,7 +38,7 @@ metragem = st.number_input("Metragem da casa :", min_value=0, value=0)
 if metragem > 0:
     # Predição para o valor inserido
     previsao = regressor_simples_casas.predict([[metragem]])[0]
-    st.write(f"Preço previsto para uma casa com {metragem} : ${previsao:.2f}")
+    st.write(f"Preço previsto para uma casa com {metragem} : R${previsao:.2f}")
 
     # Gráficos de dispersão e linha de regressão
     previsoes_treinamento = regressor_simples_casas.predict(X_casas_treinamento)
