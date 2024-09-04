@@ -100,7 +100,7 @@ def main():
     col1, col2, col3 = st.columns([1, 2, 1])  # Definindo uma estrutura de colunas com proporções 1:2:1
 
     with col2:
-        st.image('/Users/ronnieshida/PycharmProjects/novoprojeto/img.png', width=350)
+        st.image('img.png', width=350)
 
     # Instruções para o usuário
     st.write("Olá! Eu sou um chatbot criado para responder suas perguntas sobre a Fatec de Adamantina.")
