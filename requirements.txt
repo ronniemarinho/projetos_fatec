@@ -3,3 +3,4 @@ opencv-python-headless
 pyqrcode
 requests
 numpy
+plotly
