@@ -1,7 +1,6 @@
 import streamlit as st
 import pickle
-from sklearn.naive_bayes import GaussianNB
-
+from sklearn.naive_bayes import MultinomialNB
 # Carregar os dados e o modelo
 with open('risco_credito.pkl', 'rb') as f:
     X_risco_credito, y_risco_credito = pickle.load(f)
