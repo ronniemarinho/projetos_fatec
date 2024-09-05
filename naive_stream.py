@@ -1,31 +1,25 @@
 import streamlit as st
 import pickle
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.preprocessing import StandardScaler
+from sklearn.naive_bayes import GaussianNB
 import numpy as np
 
 # Carregar os dados e o modelo
 with open('risco_credito.pkl', 'rb') as f:
     X_risco_credito, y_risco_credito = pickle.load(f)
 
-# Escalar os dados para melhorar o desempenho do KNN
-scaler = StandardScaler()
-X_risco_credito = scaler.fit_transform(X_risco_credito)
+naive_risco_credito = GaussianNB()
+naive_risco_credito.fit(X_risco_credito, y_risco_credito)
 
-# Treinar o KNN com k=3 e distância euclidiana
-knn_risco_credito = KNeighborsClassifier(n_neighbors=3, metric='euclidean')
-knn_risco_credito.fit(X_risco_credito, y_risco_credito)
-
-# Função para prever o risco de crédito usando KNN
-def prever_risco_knn(historia, divida, garantias, renda):
-    previsao = knn_risco_credito.predict(scaler.transform([[historia, divida, garantias, renda]]))
+# Função para prever o risco de crédito
+def prever_risco(historia, divida, garantias, renda):
+    previsao = naive_risco_credito.predict([[historia, divida, garantias, renda]])
     return previsao[0]
 
 # Interface do Streamlit
-st.title('Classificação de Risco de Crédito com KNN')
-
+st.title('Classificação de Risco de Crédito')
 # Centralizando a imagem usando colunas
-col1, col2, col3 = st.columns([1, 2, 1])  # Definindo uma estrutura de colunas com proporções 1:2:1
+col1, col2, col3 = st.columns([1, 2, 1])
+
 with col2:
     st.image('img.png', width=350)
 
@@ -47,7 +41,7 @@ if st.button('Prever Risco de Crédito'):
     divida_val = divida_map[divida]
     garantias_val = garantias_map[garantias]
     renda_val = renda_map[renda]
-    resultado = prever_risco_knn(historia_val, divida_val, garantias_val, renda_val)
+    resultado = prever_risco(historia_val, divida_val, garantias_val, renda_val)
 
     st.write('A previsão do risco de crédito é:')
     if resultado == 0:
@@ -57,15 +51,31 @@ if st.button('Prever Risco de Crédito'):
     else:
         st.write('Alto')
 
-    # Mostrar a fórmula do KNN e instanciá-la com os valores inseridos
-    st.subheader("Fórmula do KNN:")
-    st.latex(r'D(X, Y) = \sqrt{\sum_{i=1}^{n} (X_i - Y_i)^2}')
+    # Exibir a fórmula matemática do Naive Bayes
+    st.subheader('Fórmula Matemática - Naive Bayes')
+    st.latex(r'''
+    P(C|X) = \frac{P(X|C) \cdot P(C)}{P(X)}
+    ''')
+    
+    # Exibir a fórmula instanciada com os valores fornecidos
+    st.subheader('Fórmula Instanciada')
+    
+    # Cálculo dos valores instanciados (simplificado para a explicação)
+    P_historia = np.exp(-0.5 * ((historia_val - naive_risco_credito.theta_[0][0]) ** 2) / naive_risco_credito.sigma_[0][0])
+    P_divida = np.exp(-0.5 * ((divida_val - naive_risco_credito.theta_[0][1]) ** 2) / naive_risco_credito.sigma_[0][1])
+    P_garantias = np.exp(-0.5 * ((garantias_val - naive_risco_credito.theta_[0][2]) ** 2) / naive_risco_credito.sigma_[0][2])
+    P_renda = np.exp(-0.5 * ((renda_val - naive_risco_credito.theta_[0][3]) ** 2) / naive_risco_credito.sigma_[0][3])
 
-    st.subheader("Fórmula Instanciada (Distância Euclidiana):")
-    distancia_instanciada = np.sqrt((historia_val - 1)**2 + (divida_val - 1)**2 + (garantias_val - 1)**2 + (renda_val - 1)**2)
-    st.latex(f'D(X, Y) = \\sqrt{{({historia_val} - 1)^2 + ({divida_val} - 1)^2 + ({garantias_val} - 1)^2 + ({renda_val} - 1)^2}} = {distancia_instanciada:.2f}')
+    # Probabilidade condicional (simplificado para o exemplo)
+    P_X_given_C = P_historia * P_divida * P_garantias * P_renda
+    P_C = naive_risco_credito.class_prior_[0]
+    P_X = P_X_given_C * P_C
+
+    st.latex(rf'''
+    P(C|X) = \frac{{P({historia_val}, {divida_val}, {garantias_val}, {renda_val}|C) \cdot P(C)}}{{P(X)}} = {P_X:.5f}
+    ''')
 
 # Exibir as classes do modelo
 st.subheader('Informações do Modelo')
 st.write('Classes do modelo:')
-st.write(knn_risco_credito.classes_)
+st.write(naive_risco_credito.classes_)
