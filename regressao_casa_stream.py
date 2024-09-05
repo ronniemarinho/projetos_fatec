@@ -24,10 +24,11 @@ regressor_simples_casas.fit(X_casas_treinamento, y_casas_treinamento)
 # Interface do Streamlit
 st.title("Predição de Preços de Casas com Fórmulas Dinâmicas")
 # Centralizando a imagem usando colunas
-    col1, col2, col3 = st.columns([1, 2, 1])  # Definindo uma estrutura de colunas com proporções 1:2:1
+col1, col2, col3 = st.columns([1, 2, 1])  # Definindo uma estrutura de colunas com proporções 1:2:1
 
-    with col2:
-        st.image('img.png', width=350)    # Seletor de cidadesst.write("Insira a metragem da casa para obter a previsão do preço:")
+with col2:
+    st.image('img.png', width=350)    # Seletor de cidades
+st.write("Insira a metragem da casa para obter a previsão do preço:")
 
 metragem = st.number_input("Metragem da casa:", min_value=0, value=0)
 
