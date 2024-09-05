@@ -22,7 +22,7 @@ regressor_simples_casas = LinearRegression()
 regressor_simples_casas.fit(X_casas_treinamento, y_casas_treinamento)
 
 # Interface do Streamlit
-st.title("Predição de Preços de Casas com Fórmulas Dinâmicas")
+st.title("Predição de Preços de Casas")
 # Centralizando a imagem usando colunas
 col1, col2, col3 = st.columns([1, 2, 1])  # Definindo uma estrutura de colunas com proporções 1:2:1
 
