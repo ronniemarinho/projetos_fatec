@@ -122,25 +122,9 @@ def main():
 
     # Fórmula da Busca A*
     st.write("**Fórmula da Busca A*:**")
-    st.latex(r"G(n) = \text{custo do caminho do nó inicial até n}")
-    st.latex(r"H(n) = \text{estimativa do custo do nó n até o objetivo}")
+    st.latex(r"G(n) = \text{custo do caminho do nó inicial até } n")
+    st.latex(r"H(n) = \text{estimativa do custo do nó } n \text{ até o objetivo}")
     st.latex(r"F(n) = G(n) + H(n)")
-
-    # Fórmula instanciada
-    if 'caminho' in st.session_state:
-        origem = st.session_state.origem
-        destino = st.session_state.destino
-        caminho = st.session_state.caminho
-        distancia = st.session_state.distancia
-
-        # Cálculo da distância total percorrida
-        g_n = distancia  # Custo total do caminho calculado
-        h_n = heuristica(caminho[-1], destino)  # Estimativa do custo restante
-
-        st.write("**Fórmula Instanciada:**")
-        st.latex(f"G(n) = {g_n}")
-        st.latex(f"H(n) = {h_n}")
-        st.latex(f"F(n) = G(n) + H(n) = {g_n} + {h_n} = {g_n + h_n}")
 
 if __name__ == '__main__':
     main()
