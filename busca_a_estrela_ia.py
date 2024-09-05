@@ -55,7 +55,7 @@ def calcular_rota(origem, destino):
     return caminho, distancia
 
 def main():
-    st.title("Otimização de Rotas com A*")
+    st.title("Otimização de Rotas com Busca A*")
     
     # Centralizando a imagem usando colunas
     col1, col2, col3 = st.columns([1, 2, 1])  # Definindo uma estrutura de colunas com proporções 1:2:1
