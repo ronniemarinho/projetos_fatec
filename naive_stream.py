@@ -22,7 +22,7 @@ st.title('Classificação de Risco de Crédito')
 col1, col2, col3 = st.columns([1, 2, 1])
 
 with col2:
-    st.image('img.png', width=350)
+    st.image('/Users/ronnieshida/PycharmProjects/novoprojeto/img.png', width=350)
 
 st.header('Insira os dados do cliente:')
 historia = st.selectbox('História de crédito', ['Boa (0)', 'Desconhecida (1)', 'Ruim (2)'])
@@ -57,7 +57,7 @@ if st.button('Prever Risco de Crédito'):
     st.latex(r'''
     P(C|X) = \frac{P(X|C) \cdot P(C)}{P(X)}
     ''')
-    
+
     # Exibir a fórmula instanciada com os valores fornecidos
     st.subheader('Fórmula Instanciada')
 
@@ -85,7 +85,7 @@ if st.button('Prever Risco de Crédito'):
     probs_normalized = probs / total_prob
 
     st.latex(r'''
-    P(C_i|X) = \frac{P(X|C_i) \cdot P(C_i)}{P(X)}
+    P(C_i|X) = \frac{P(X|C_i) \cdot P(C_i)}{\sum_{j=1}^{n} P(X|C_j) \cdot P(C_j)}
     ''')
 
     for i, prob in enumerate(probs_normalized):
