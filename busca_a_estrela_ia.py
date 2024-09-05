@@ -56,8 +56,7 @@ def calcular_rota(origem, destino):
 
 def main():
     st.title("Otimização de Rotas com A*")
-
-    # Seletor de cidades
+    st.image('img.png', width=350)    # Seletor de cidades
     cidades = [arad, zerind, timisoara, lugoj, mehadia, dobreta, craiova, rimnicu_vilcea, pitesti, bucharest, sibiu, fagaras, oradea]
     cidade_opcoes = [cidade.nome for cidade in cidades]
 
