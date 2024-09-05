@@ -27,7 +27,7 @@ st.title('Classificação de Risco de Crédito com KNN')
 # Centralizando a imagem usando colunas
 col1, col2, col3 = st.columns([1, 2, 1])  # Definindo uma estrutura de colunas com proporções 1:2:1
 with col2:
-    st.image('/Users/ronnieshida/PycharmProjects/novoprojeto/img.png', width=350)
+    st.image('img.png', width=350)
 
 st.header('Insira os dados do cliente:')
 historia = st.selectbox('História de crédito', ['Boa (0)', 'Desconhecida (1)', 'Ruim (2)'])
