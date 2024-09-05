@@ -60,8 +60,8 @@ def main():
     # Centralizando a imagem usando colunas
     col1, col2, col3 = st.columns([1, 2, 1])  # Definindo uma estrutura de colunas com proporções 1:2:1
 
-with col2:
-    st.image('img.png', width=350)    # Seletor de cidades
+    with col2:
+        st.image('img.png', width=350)    # Seletor de cidades
     cidades = [arad, zerind, timisoara, lugoj, mehadia, dobreta, craiova, rimnicu_vilcea, pitesti, bucharest, sibiu, fagaras, oradea]
     cidade_opcoes = [cidade.nome for cidade in cidades]
 
