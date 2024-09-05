@@ -84,12 +84,9 @@ if st.button('Prever Risco de Crédito'):
     total_prob = np.sum(probs)
     probs_normalized = probs / total_prob
 
-    st.latex(r'''
-    P(C_i|X) = \frac{P(X|C_i) \cdot P(C_i)}{\sum_{j=1}^{n} P(X|C_j) \cdot P(C_j)}
-    ''')
-
+    st.write('Probabilidade para cada classe com os valores fornecidos:')
     for i, prob in enumerate(probs_normalized):
-        st.write(f'Probabilidade para a classe {naive_risco_credito.classes_[i]}: {prob:.5f}')
+        st.write(f'Classe {naive_risco_credito.classes_[i]}: {prob:.5f}')
 
 # Exibir as classes do modelo
 st.subheader('Informações do Modelo')
