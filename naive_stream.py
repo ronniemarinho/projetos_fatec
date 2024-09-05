@@ -17,6 +17,7 @@ def prever_risco(historia, divida, garantias, renda):
 
 # Interface do Streamlit
 st.title('Classificação de Risco de Crédito')
+
 # Centralizando a imagem usando colunas
 col1, col2, col3 = st.columns([1, 2, 1])
 
@@ -59,21 +60,36 @@ if st.button('Prever Risco de Crédito'):
     
     # Exibir a fórmula instanciada com os valores fornecidos
     st.subheader('Fórmula Instanciada')
-    
-    # Cálculo dos valores instanciados (simplificado para a explicação)
-    P_historia = np.exp(-0.5 * ((historia_val - naive_risco_credito.theta_[0][0]) ** 2) / naive_risco_credito.sigma_[0][0])
-    P_divida = np.exp(-0.5 * ((divida_val - naive_risco_credito.theta_[0][1]) ** 2) / naive_risco_credito.sigma_[0][1])
-    P_garantias = np.exp(-0.5 * ((garantias_val - naive_risco_credito.theta_[0][2]) ** 2) / naive_risco_credito.sigma_[0][2])
-    P_renda = np.exp(-0.5 * ((renda_val - naive_risco_credito.theta_[0][3]) ** 2) / naive_risco_credito.sigma_[0][3])
 
-    # Probabilidade condicional (simplificado para o exemplo)
-    P_X_given_C = P_historia * P_divida * P_garantias * P_renda
-    P_C = naive_risco_credito.class_prior_[0]
-    P_X = P_X_given_C * P_C
+    # Cálculo das probabilidades para cada classe
+    n_classes = len(naive_risco_credito.classes_)
+    probs = np.zeros(n_classes)
+
+    for i in range(n_classes):
+        # Probabilidade da classe
+        prob_class = naive_risco_credito.class_prior_[i]
+
+        # Probabilidade das características dado a classe
+        prob_features_given_class = 1.0
+        for j in range(X_risco_credito.shape[1]):
+            mean = naive_risco_credito.theta_[i, j]
+            var = naive_risco_credito.sigma_[i, j]
+            feature_val = [historia_val, divida_val, garantias_val, renda_val][j]
+            prob_feature = (1.0 / np.sqrt(2 * np.pi * var)) * np.exp(-0.5 * ((feature_val - mean) ** 2 / var))
+            prob_features_given_class *= prob_feature
+        
+        # Probabilidade total para a classe
+        probs[i] = prob_class * prob_features_given_class
+
+    total_prob = np.sum(probs)
+    probs_normalized = probs / total_prob
 
     st.latex(rf'''
-    P(C|X) = \frac{{P({historia_val}, {divida_val}, {garantias_val}, {renda_val}|C) \cdot P(C)}}{{P(X)}} = {P_X:.5f}
+    P(C_i|X) = \frac{P(X|C_i) \cdot P(C_i)}{P(X)}
     ''')
+
+    for i, prob in enumerate(probs_normalized):
+        st.write(f'Probabilidade para a classe {naive_risco_credito.classes_[i]}: {prob:.5f}')
 
 # Exibir as classes do modelo
 st.subheader('Informações do Modelo')
