@@ -30,8 +30,8 @@ programacao['alto'] = fuzz.trimf(programacao.universe, [5, 10, 10])
 
 # Ajustando as funções de pertinência para preferencia
 preferencia['baixa'] = fuzz.trimf(preferencia.universe, [0, 0, 6])
-preferencia['media'] = fuzz.trimf(preferencia.universe, [4, 6, 8])  # Ajuste para [5, 7, 9] para [4, 6, 8]
-preferencia['alta'] = fuzz.trimf(preferencia.universe, [7, 10, 10])  # Reduzindo para [7, 10, 10]
+preferencia['media'] = fuzz.trimf(preferencia.universe, [4, 6, 8])
+preferencia['alta'] = fuzz.trimf(preferencia.universe, [7, 10, 10])
 
 # Definindo as regras fuzzy
 regra1 = ctrl.Rule(matematica['alto'] & logico['alto'] & estatistica['alto'] & programacao['alto'], preferencia['alta'])
@@ -45,18 +45,18 @@ sistema = ctrl.ControlSystemSimulation(controle)
 
 # Interface gráfica com Streamlit
 st.markdown(
-        """
-        <div style='text-align: center;'>
-            <h1>Sistema Fuzzy para o curso de Ciência de Dados da Fatec</h1>
-        </div>
-        """, unsafe_allow_html=True
-    )
+    """
+    <div style='text-align: center;'>
+        <h1>Sistema Fuzzy para o curso de Ciência de Dados da Fatec</h1>
+    </div>
+    """, unsafe_allow_html=True
+)
 # Centralizando a imagem usando colunas
 col1, col2, col3 = st.columns([1, 2, 1])  # Definindo uma estrutura de colunas com proporções 1:2:1
 
 with col2:
     st.image('img.png', width=350)
-#st.title('Sistema Fuzzy para o curso de Ciência de Dados da Fatec Adamantina')
+# st.title('Sistema Fuzzy para o curso de Ciência de Dados da Fatec Adamantina')
 
 # Slider para entrada de valores
 st.sidebar.title('Valores de Entrada')
@@ -78,12 +78,43 @@ sistema.compute()
 preferencia_value = sistema.output['preferencia']
 
 # Exibindo o resultado
-#st.write(f'Preferência de Curso: {preferencia_value:.2f}')
 st.write(f'Afinidade do aluno para o curso em uma escala de 0 a 10 é: **{preferencia_value:.2f}**')
 
-
-# Visualização dos universos e funções de pertinência
+# Visualização das funções de pertinência
 st.subheader('Visualização das Funções de Pertinência')
+
+# Explicação da fórmula de pertinência
+st.write(
+    """
+    **Cálculo da Pertinência:**
+    
+    O grau de pertinência de cada entrada (Matemática, Lógico, Estatística, Programação) às funções fuzzy é calculado com base na fórmula triangular. A pertinência é a área sob a função triangular que representa o grau de pertencimento de um valor a um termo fuzzy.
+
+    As fórmulas instanciadas para cada variável são calculadas da seguinte forma:
+
+    - **Matemática**:
+        - Baixo: `fuzz.trimf(matematica.universe, [0, 0, 5])`
+        - Médio: `fuzz.trimf(matematica.universe, [0, 5, 10])`
+        - Alto: `fuzz.trimf(matematica.universe, [5, 10, 10])`
+
+    - **Lógico**:
+        - Baixo: `fuzz.trimf(logico.universe, [0, 0, 5])`
+        - Médio: `fuzz.trimf(logico.universe, [0, 5, 10])`
+        - Alto: `fuzz.trimf(logico.universe, [5, 10, 10])`
+
+    - **Estatística**:
+        - Baixo: `fuzz.trimf(estatistica.universe, [0, 0, 5])`
+        - Médio: `fuzz.trimf(estatistica.universe, [0, 5, 10])`
+        - Alto: `fuzz.trimf(estatistica.universe, [5, 10, 10])`
+
+    - **Programação**:
+        - Baixo: `fuzz.trimf(programacao.universe, [0, 0, 5])`
+        - Médio: `fuzz.trimf(programacao.universe, [0, 5, 10])`
+        - Alto: `fuzz.trimf(programacao.universe, [5, 10, 10])`
+    
+    Cada fórmula triangular é instanciada com base no valor de entrada atual para calcular a pertinência para cada termo fuzzy. O grau de pertencimento é utilizado para avaliar as regras fuzzy e determinar a saída.
+    """
+)
 
 # Plotando as funções de pertinência
 fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(8, 10))
@@ -104,20 +135,4 @@ ax2.legend()
 
 # Estatística
 ax3.plot(estatistica.universe, fuzz.trimf(estatistica.universe, [0, 0, 5]), 'b', linewidth=1.5, label='Baixo')
-ax3.plot(estatistica.universe, fuzz.trimf(estatistica.universe, [0, 5, 10]), 'g', linewidth=1.5, label='Médio')
-ax3.plot(estatistica.universe, fuzz.trimf(estatistica.universe, [5, 10, 10]), 'r', linewidth=1.5, label='Alto')
-ax3.title.set_text('Estatística')
-ax3.legend()
-
-# Programação
-ax4.plot(programacao.universe, fuzz.trimf(programacao.universe, [0, 0, 5]), 'b', linewidth=1.5, label='Baixo')
-ax4.plot(programacao.universe, fuzz.trimf(programacao.universe, [0, 5, 10]), 'g', linewidth=1.5, label='Médio')
-ax4.plot(programacao.universe, fuzz.trimf(programacao.universe, [5, 10, 10]), 'r', linewidth=1.5, label='Alto')
-ax4.title.set_text('Programação')
-ax4.legend()
-
-# Ajustes finais de layout
-plt.tight_layout()
-
-# Mostrando os gráficos no Streamlit
-st.pyplot(fig)
+ax3.plot(estatistica.un
