@@ -84,7 +84,7 @@ if st.button('Prever Risco de Crédito'):
     total_prob = np.sum(probs)
     probs_normalized = probs / total_prob
 
-    st.latex(rf'''
+    st.latex(r'''
     P(C_i|X) = \frac{P(X|C_i) \cdot P(C_i)}{P(X)}
     ''')
 
