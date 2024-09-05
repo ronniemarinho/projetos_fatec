@@ -37,10 +37,9 @@ st.latex(f"Preço = {regressor_simples_casas.intercept_:.2f} + {regressor_simple
 if metragem > 0:
     # Predição para o valor inserido
     previsao = regressor_simples_casas.predict([[metragem]])[0]
-
+    
     # Exibir o preço previsto em fonte maior e em negrito
-    st.markdown(f"<h2><b>Preço previsto para uma casa com {metragem} metros quadrados: R${previsao:.2f}</b></h2>",
-                unsafe_allow_html=True)
+    st.markdown(f"<h2><b>Preço previsto para uma casa com {metragem} metros quadrados: R${previsao:.2f}</b></h2>", unsafe_allow_html=True)
 
     # Mostrar fórmula instanciada
     st.write("Fórmula com os valores inseridos:")
@@ -75,13 +74,31 @@ if metragem > 0:
     st.write(f"Covariância: {cov:.2f}")
     st.write(f"Coeficiente de Correlação: {cor:.2f}")
 
+    # Exibindo as fórmulas instanciadas de Covariância, Correlação e R²
+    st.subheader("Fórmulas Instanciadas")
+
+    # Fórmula da Covariância
+    st.latex(r'\text{Cov}(X, Y) = \frac{\sum (X_i - \bar{X})(Y_i - \bar{Y})}{n - 1}')
+    st.write(f"Com os valores calculados:")
+    st.latex(f"Cov(X, Y) = {cov:.2f}")
+
+    # Fórmula do Coeficiente de Correlação
+    st.latex(r'r = \frac{\text{Cov}(X, Y)}{\sigma_X \cdot \sigma_Y}')
+    st.write(f"Com os valores calculados:")
+    st.latex(f"r = \\frac{{{cov:.2f}}}{{{np.std(X_casas_treinamento):.2f} \\cdot {np.std(y_casas_treinamento):.2f}}} = {cor:.2f}")
+
+    # Fórmula do Coeficiente de Determinação (R²)
+    st.latex(r'R^2 = 1 - \frac{SSE}{SST}')
+    st.write(f"Com os valores calculados:")
+    st.latex(f"R^2 = 1 - \\frac{{{np.sum((y_casas_teste - previsoes_teste) ** 2):.2f}}}{{{np.sum((y_casas_teste - np.mean(y_casas_teste)) ** 2):.2f}}} = {r2:.2f}")
+
     # Tabela de interpretação do coeficiente de correlação
     st.subheader("Interpretação do Coeficiente de Correlação")
     interpretacao = pd.DataFrame({
         "Intervalo de Correlação": ["0.0 a 0.19", "0.2 a 0.39", "0.4 a 0.59", "0.6 a 0.79", "0.8 a 1.0"],
         "Interpretação": ["Muito fraca", "Fraca", "Moderada", "Forte", "Muito forte"]
     })
-
+    
     st.table(interpretacao)
 
 # Rodar o aplicativo: use o comando 'streamlit run app.py' no terminal
